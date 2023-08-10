@@ -30,22 +30,27 @@ plt.show()
 plt.close()
 
 
+#print(y_train.shape) # (3601, )
+#print(x_train.shape) # 3601x500 matrix
+#print(x_test.shape) # 1320x500 matrix
+#print(y_test.shape) # (1320, )
 
 
 
 
 # ---------------------------------------------------------------------------------------------
 # make data multivariate
-x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1)) # reshape to (n_samples, n_timesteps, n_variables)
-x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1)) # also reshape the test data so that it has the same shape as the training data
+x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1)) 
+x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1)) 
 
+print(x_train.shape) # 3601x500x1
+print(x_test.shape) # 1320x500x1
 
 # loss function -> what is the difference between the predicted and the actual value (less the better)
 # count classes to use loss function sparse_categorical_crossentropy
 num_classes = len(np.unique(y_train))
 
 # shuffle the training set to use validation_split afterwards 
-# it is basically saying how much of the training data should be used for validation
 idx = np.random.permutation(len(x_train))
 x_train = x_train[idx]
 y_train = y_train[idx]
@@ -61,6 +66,7 @@ y_test[y_test == -1] = 0
 
 
 # --------------------------------------BUILD THE MODEL---------------------------------------
+
 def make_model(input_shape):
     input_layer = keras.layers.Input(input_shape) # input layer
 
@@ -149,6 +155,7 @@ test_loss, test_acc = model.evaluate(x_test, y_test)
 
 print("Test accuracy", test_acc)
 print("Test loss", test_loss)
+
 
 
 
